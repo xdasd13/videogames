@@ -1,23 +1,181 @@
-# CodeIgniter 4 Application Starter
+# Sistema de Gestión de Usuarios - CodeIgniter 4
 
-## What is CodeIgniter?
+Sistema de gestión de usuarios desarrollado con CodeIgniter 4, implementando arquitectura MVC y siguiendo las mejores prácticas de desarrollo.
 
-CodeIgniter is a PHP full-stack web framework that is light, fast, flexible and secure.
-More information can be found at the [official site](https://codeigniter.com).
+## Características
 
-This repository holds a composer-installable app starter.
-It has been built from the
-[development repository](https://github.com/codeigniter4/CodeIgniter4).
+- Autenticación de usuarios
+- Registro de nuevos usuarios
+- Gestión de perfiles
+- Carga de avatares
+- Panel de administración
+- Sistema de roles (admin/usuario)
+- Validación de formularios
+- Manejo de sesiones
+- Encriptación de contraseñas
 
-More information about the plans for version 4 can be found in [CodeIgniter 4](https://forum.codeigniter.com/forumdisplay.php?fid=28) on the forums.
+## Requisitos Previos
 
-You can read the [user guide](https://codeigniter.com/user_guide/)
-corresponding to the latest version of the framework.
+- PHP 8.0 o superior
+- MySQL 5.7 o superior
+- Composer
+- Apache/Nginx
+- Extensiones PHP requeridas:
+  - intl
+  - json
+  - mbstring
+  - mysqlnd
+  - xml
+  - curl
 
-## Installation & updates
+## Instalación
 
-`composer create-project codeigniter4/appstarter` then `composer update` whenever
-there is a new release of the framework.
+1. Clonar el repositorio:
+```bash
+git clone https://github.com/tuusuario/videogames.git
+cd videogames
+```
+
+2. Instalar dependencias:
+```bash
+composer install
+```
+
+3. Configurar el entorno:
+   - Copiar `env` a `.env`
+   - Actualizar las credenciales de la base de datos en `.env`:
+```
+database.default.hostname = localhost
+database.default.database = videogames
+database.default.username = tu_usuario
+database.default.password = tu_contraseña
+```
+
+4. Crear la base de datos:
+```sql
+CREATE DATABASE videogames;
+```
+
+5. Ejecutar las migraciones:
+```bash
+php spark migrate
+```
+
+6. Ejecutar el seeder para crear usuarios de prueba:
+```bash
+php spark db:seed SUsuarios
+```
+
+7. Configurar el servidor web:
+   - Apuntar el DocumentRoot a la carpeta `public/`
+   - Asegurarse que el módulo rewrite está habilitado
+
+## Configuración del Host Virtual
+
+### Apache
+```apache
+<VirtualHost *:80>
+    ServerName videogames.test
+    DocumentRoot "C:/xampp/htdocs/videogames/public"
+    <Directory "C:/xampp/htdocs/videogames/public">
+        AllowOverride All
+        Require all granted
+    </Directory>
+</VirtualHost>
+```
+
+### Archivo hosts
+Agregar en `C:\Windows\System32\drivers\etc\hosts`:
+```
+127.0.0.1 videogames.test
+```
+
+## Estructura de Directorios
+
+```
+videogames/
+├── app/
+│   ├── Config/
+│   ├── Controllers/
+│   ├── Database/
+│   │   ├── Migrations/
+│   │   └── Seeds/
+│   ├── Filters/
+│   ├── Models/
+│   └── Views/
+├── public/
+│   └── images/
+│       └── avatar/
+└── writable/
+```
+
+## Usuarios por Defecto
+
+1. Administrador:
+   - Usuario: admin
+   - Contraseña: admin123
+
+2. Usuario Regular:
+   - Usuario: usuario1
+   - Contraseña: user123
+
+## Funcionalidades Principales
+
+1. Autenticación:
+   - Login: `http://videogames.test/login`
+   - Registro: `http://videogames.test/register`
+   - Logout: `http://videogames.test/logout`
+
+2. Gestión de Perfil:
+   - Ver perfil: `http://videogames.test/profile`
+   - Actualizar avatar
+   - Ver información personal
+
+3. Administración:
+   - Lista de usuarios: `http://videogames.test/users` (solo admin)
+   - Gestión de roles
+
+## Seguridad
+
+- Contraseñas encriptadas con `password_hash()`
+- Protección contra CSRF
+- Validación de formularios
+- Filtros de autenticación
+- Manejo seguro de sesiones
+- Protección de rutas
+
+## Mantenimiento
+
+Para limpiar la caché y archivos temporales:
+```bash
+php spark cache:clear
+```
+
+Para actualizar la base de datos después de cambios:
+```bash
+php spark migrate:refresh
+php spark db:seed SUsuarios
+```
+
+## Resolución de Problemas
+
+1. Error de permisos:
+   - Asegurar que las carpetas `writable/` y `public/images/avatar/` tienen permisos de escritura
+
+2. Error de base de datos:
+   - Verificar las credenciales en `.env`
+   - Confirmar que el servicio MySQL está corriendo
+
+3. Error 404:
+   - Verificar la configuración del host virtual
+   - Comprobar que mod_rewrite está habilitado
+
+## Convenciones de Código
+
+Este proyecto sigue:
+- PSR-12 para estándares de código
+- Convenciones de nombres de CodeIgniter 4
+- Arquitectura MVC
 
 When updating, check the release notes to see if there are any changes you might need to apply
 to your `app` folder. The affected files can be copied or merged from

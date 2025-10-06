@@ -53,7 +53,7 @@ database.default.password = tu_contraseña
 
 4. Crear la base de datos:
 ```sql
-CREATE DATABASE videogames;
+CREATE DATABASE miapp;
 ```
 
 5. Ejecutar las migraciones:
